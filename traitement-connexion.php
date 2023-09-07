@@ -16,16 +16,14 @@ isset($_POST["mdp"])){
 }
 
 
-//on cherche dans la base de données les informations de l'utilisateur
+//on cherche dans la base de données si les informations données correspondent à un utilisateur
     $sql = 'SELECT * FROM user WHERE mail=:mail AND mdp=:mdp';
     $requete = $myBDD->prepare($sql);
     $requete->bindParam('mail', $mail, PDO::PARAM_STR);
     $requete->bindParam('mdp', $mdp, PDO::PARAM_STR);
     $requete->execute();
 
-    var_dump($requete->rowCount());
-
-    //si la recherche a permi de trouver une ligne (donc un utilisateur déjà inscrit) on démarre une session
+    //si les données renseseignées correspondent bien à un utilisateur déjà inscrit dans la base de données, on démarre une session
     //sinon on le redirige vers la page de connexion
     if($requete->rowCount()>0){
         session_start();
